@@ -2,30 +2,38 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width=800;
 canvas.height=800;
-
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-    "#18dcff",
-    "#7d5fff",
-];
-  
-ctx.lineWidth=2;
+ctx.lineWidth = 2;
 
 
-function onClick(event){
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
+let isPainting = false;
+function onMove(event){
+    if(isPainting){
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        return;
+    }
+    ctx.moveTo(event.offsetX, event.offsetY);
 }
 
-//canvas.addEventListener("click", onClick);
-canvas.addEventListener("mousemove", onClick);
+function onMouseDown(){
+    isPainting = true;
+}
+
+function onMouseUp(){
+    isPainting = false;
+}
+
+function startPainting(){
+    isPainting = true;
+}
+
+function cancelPainting(){
+    isPainting = false;
+}
+
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", onMouseDown);
+//canvas.addEventListener("mouseup", onMouseUp);
+//canvas.addEventListener("mouseleave", onMouseUp); // 마우스가 창 밖으로 나갔을 때는 MouseUp으로 감지
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
