@@ -1,3 +1,4 @@
+const textInput = document.getElementById("text"); // Textbox에서 생기는 이벤트엔 관심 없음. 대신 더블 클릭시 이벤트 발생
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn"); 
@@ -12,6 +13,7 @@ const CANVAS_HEIGHT = 800;
 canvas.width=CANVAS_WIDTH;
 canvas.height=CANVAS_HEIGHT;
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap="round";
 let isPainting = false;
 let isFilling = false;
 
@@ -100,8 +102,22 @@ function onFileChange(event){
     };
 }
 
+function onDoubleClick(event){
+   const text = textInput.value;
+   if (text !== ""){
+    ctx.save(); //ctx의 현재 상태, 색상, 스타일 등 모든 것을 저장
+    const text = textInput.value;
+    ctx.lineWidth=1; //텍스트 크기가 변하면서 브러쉬 크기도 바뀜 -> save함수 사용
+    ctx.font = "48px serif"
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore(); // -> 저장해뒀던 버전으로 되돌림  save와 restore사이에서는 어떤 수정을 하던 저장되지 않음.
+    //console.log(event.offsetX, event.offsetY);
+   }
+}
+
 
 //canvas.onmousemove = function(){} // 바로 아래 코드와 동일한 작동
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", onMouseDown);
 //canvas.addEventListener("mouseup", onMouseUp);
