@@ -93,13 +93,13 @@ function onEraserClick(){
 }
 
 function onFileChange(event){
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
+    const file = event.target.files[0]; //유저가 업로드한 파일은 이미 브라우저의 메모리 안에 있음. 하지만 URL을 통해 해당 파일에 접근하려고 함.
+    const url = URL.createObjectURL(file); // 그래서 createObjectUrl 메소드를 호출
     const image = new Image();
     image.src = url;
     image.onload = function(){
         ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        fileInput.value = null;
+        fileInput.value = null; //이미지 띄운 후 다른 이미지를 띄울 수 있게 하기 위해 null
     };
 }
 
