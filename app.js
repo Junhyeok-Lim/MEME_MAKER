@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text"); // Textbox에서 생기는 이벤트엔 관심 없음. 대신 더블 클릭시 이벤트 발생
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
@@ -115,6 +116,15 @@ function onDoubleClick(event){
    }
 }
 
+function onSaveClick(){ //base64로 인코딩된 이미지를 텍스트로
+    const url = canvas.toDataURL();
+    const a = document.createElement("a"); // a 태그를 생성해서 가짜 링크 만들고
+    a.href = url; //링크의 href는 그림 URL로 설정해주고
+    a.download = "myDrawing.png"; //'myDrawing.png'라는 파일명으로 저장시킨다고 설정
+    a.click(); // 클릭 시 사진 저장
+}
+
+
 
 //canvas.onmousemove = function(){} // 바로 아래 코드와 동일한 작동
 canvas.addEventListener("dblclick", onDoubleClick);
@@ -132,3 +142,4 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
