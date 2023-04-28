@@ -124,7 +124,7 @@ function onSaveClick(){ //base64로 인코딩된 이미지를 텍스트로
     a.click(); // 클릭 시 사진 저장
 }
 
-
+//EventTarget 인터페이스의 addEventListener() 메서드는 지정한 유형의 이벤트를 대상이 수신할 때마다 호출할 함수를 설정
 
 //canvas.onmousemove = function(){} // 바로 아래 코드와 동일한 작동
 canvas.addEventListener("dblclick", onDoubleClick);
